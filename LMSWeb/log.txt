@@ -1,0 +1,16 @@
+Opened connection at 11/25/2017 3:11:51 PM +05:30
+
+SELECT 
+    [Extent1].[id] AS [id], 
+    [Extent1].[QuestionName] AS [QuestionName]
+    FROM [dbo].[Question] AS [Extent1]
+
+
+-- Executing at 11/25/2017 3:11:51 PM +05:30
+
+-- Completed in 32 ms with result: SqlDataReader
+
+
+
+Closed connection at 11/25/2017 3:11:51 PM +05:30
+

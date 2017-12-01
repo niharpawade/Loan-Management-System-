@@ -1,0 +1,234 @@
+﻿
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_PrivateLayout.cshtml";
+}
+<div class="container-fluid" ng-controller="customercontroller">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="#">Dashboard</a>
+        </li>
+        <li class="breadcrumb-item active">Customer Create</li>
+    </ol>
+    <form id="frmcustomer" name="frmcustomer">
+        <div class="card">
+            <div class="card-header">Customer Information</div>
+            <div class="card-body">
+                <!--Row-->
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Name<span ng-show="frmcustomer.txtname.$invalid" style="color:red">*</span></label>
+                            <input type="text" maxlength="50" id="txtname" ng-model="txtname" name="txtname" class="form-control" required/>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>AdhaarNo</label>
+                            <input type="text" maxlength="12"id="txtAdhaarno" 
+                                   name="txtAdhaarno" class="form-control" ng-model="Adhaarno"/>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <label>Mobile No<span class="errorlabel" ng-show="frmcustomer.txtMobileNo.$invalid">*</span></label>
+                        <input type="text"  maxlength="12"
+                                id="txtMobileNo" name="txtMobileNo"
+                               ng-model="MobileNo"
+                                class="form-control" required />
+                    </div>
+                </div>
+                <!--Row-->
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>PAN Card</label>
+                            <input type="text" class="form-control" id="txtpancard" 
+                                   ng-model="pancard"
+                                   name="txtpancard"  maxlength="12"/>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>DOB</label>
+                            <input type="date" class="form-control" id="txtDOB" 
+                                   ng-model="dob"
+                                   name="txtDOB"/>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Gender</label>
+                        </div>
+                        <div>
+                           <span>
+                               <input type="radio"  name="rbtnGender" ng-model="gender"  class="radio-inline" value="m"  /> Male
+                               <input type="radio"  name="rbtnGender" ng-model="gender" class="radio-inline" value="f"/> Female
+                           </span>
+                               
+                            
+                        </div>
+                    </div>
+                </div>
+                <!--Row-->
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Marital Status</label>
+                            <select class="form-control">
+                                <option>Married</option>
+                                <option>Single</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Annual Income</label>
+                            <input type="text" dir="ltr" maxlength="7" 
+                                   ng-model="AnnualIncome"
+                                   id="txtAnnualIncome" name="txtAnnualIncome" class="form-control"/>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Occupation</label>
+                            <input type="text" class="form-control" id="txtOccupation" name="txtOccupation" maxlength="100"/>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br/>
+        <div class="card">
+            <div class="card-header">Present Addrress</div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Address1</label>
+                            <input type="text" class="form-control" 
+                                   id="txtAddress1" name="txtAddress1" ng-model="present.address1"/>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Address2</label>
+                            <input type="text" class="form-control" id="txtAddress2"
+                                   name="txtAddress2" ng-model="present.address2"
+                                    />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>City</label>
+                            <input type="text" class="form-control" 
+                                   id="txtCity1" name="txtCity1"
+                                   ng-model="present.city"
+                                   />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>District</label>
+                            <input type="text" class="form-control"
+                                   id="txtDistrict1" name="txtDistrict1"
+                                   ng-model="present.district"
+                                    />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>State</label>
+                            <select class="form-control"
+                                    id="ddlstate1"
+                                    name="ddlstate1"
+                                     ng-model="present.state">
+                                <option>Andhra Pradesh</option>
+                                <option>Arunchal Pradesh</option>
+                                <option>Telangana</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>PINCode</label>
+                            <input type="text" 
+                                   id="txtPinCode1"
+                                   name="txtPinCode1"
+                                   ng-model="present.pincode"
+                                   class="form-control" maxlength="6" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br/>
+        <div class="card">
+            <div class="card-header">Permanent Addrress</div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Address1</label>
+                            <input type="text" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Address2</label>
+                            <input type="text" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>City</label>
+                            <input type="text" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>District</label>
+                            <input type="text" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>State</label>
+                            <select class="form-control">
+                                <option>Andhra Pradesh</option>
+                                <option>Arunchal Pradesh</option>
+                                <option>Telangana</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>PINCode</label>
+                            <input type="text" class="form-control" maxlength="6" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">&nbsp;</div>
+                    <div class="col-md-6">
+                        <input type="button" class="btn btn-primary" 
+                               value="Submit" ng-click="savecustomer()"  style="margin-right:4px" />
+                        <input type="button" value="Reset" class="btn btn-danger"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+@section javascriptsection
+{
+    <script src="~/Scripts/customer/createcustomer.js"></script>
+}

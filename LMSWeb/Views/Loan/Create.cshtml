@@ -1,0 +1,181 @@
+﻿
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_PrivateLayout.cshtml";
+}
+
+
+<div class="container-fluid" ng-controller="loancontroller">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="index.html">Dashboard</a>
+        </li>
+        <li class="breadcrumb-item active">Loan Create</li>
+    </ol>
+    <form id="frmloan" name="frmloan" >
+       <div class="card">
+           <div class="card-header">
+               Loan Information
+           </div>
+           <div class="card-body">
+               <!--row-->
+               <div class="row">
+                   <div class="col-md-4">
+                       <div class="form-group">
+                           <label>Customer Name<span style="color:red" ng-show="frmloan.txtcustomer.$invalid">*</span></label>
+                           <select class="form-control" id="txtcustomer" name="txtcustomer" ng-model="customer" ng-options="customer.Name for customer in customers"></select>
+                       </div>
+                       <div class="form-group">
+                           <label>Applied Date</label>
+                           <input type="date" class="form-control" id="txtapplieddate" name="txtapplieddate" ng-model="applieddate" value="" />
+                       </div>   
+                       <div class="form-group">
+                           <label>Intrest Rate</label>
+                           <input type="text" class="form-control" id="txtintrestrate" name="txtintrestrate" ng-model="intrestrate" readonly />
+                       </div>
+                       
+                   </div>
+                   <div class="col-md-4">
+                       <div class="form-group">
+                           <label>Loan Type<span style="color:red" ng-show="frmloan.ddlloantype.$invalid">*</span></label>
+                           <select class="form-control" id="ddlloantype" name="ddlloantype" ng-model="loantype" ng-options="loantype.LoanName for loantype in loantypes" ng-change="getrelatedvals(loantype)" required></select>
+                       </div>
+                       <div class="form-group">
+                           <label>Number Of Installments<span style="color:red" id="errmsgmaxinstallments" ng-show="frmloan.txtnoofinstallments.$invalid">*</span></label>
+                           <input type="number" class="form-control" id="txtnoofinstallments" name="txtnoofinstallments" ng-model="noofinstallments" required maxlenght="50" min="0" ng-keyup="changemaxinstallments()" />
+                       </div>
+                       <div class="form-group">
+                           <label>Amount<span style="color:red" ng-show="frmloan.txtamount.$invalid">*</span></label>
+                           <input type="number" class="form-control" id="txtamount" name="txtamount" ng-model="amount" required  maxlength="20" ng-keyup="changemaxamount()"/>
+
+                       </div>
+                                          
+                   </div>
+                   <div class="col-md-4">
+                       <div class="form-group">
+                           <lable>Loan Number</lable>
+                           <input type="text" class="form-control" id="txtloanno" name="txtloanno"ng-model="loanno" readonly />
+                       </div>
+                       <div class="form-group">
+                           <lable>Loan Status</lable>
+                           <input type="text" class="form-control" id="txtloanstatus" name="txtloanstatus"ng-model="loanstatus" readonly />
+                       </div>
+                       <div class="form-group">
+                           <label>Activation Date</label>
+                           <input type="date" class="form-control" id="txtactivationdate" name="txtactivationdate"ng-model="activationdate" readonly />
+                       </div>
+                       
+                      
+                   </div>
+               </div>
+               <!--row-->
+               <div class="row">
+                   <div class="col-md-4">
+                       <div class="form-group">
+                           <label>Paid Installments</label>
+                           <input type="text" class="form-control" id="txtpaidinstallments" name="txtpaidinstallments" ng-model="paidinstallments" readonly"/>
+                       </div>
+                       <div class="form-group">
+                           <label></label>
+                       </div>
+                   </div>
+               </div>
+           </div>
+       </div>
+        <br/>
+        
+        <div class="card">
+            <div class="card-header">Nominee Information</div>
+            <div class="card-body">
+                <!--ROW-->
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Nominee Name<span style="color:red" ng-show="frmloan.txtnomineename.$invalid">*</span></label>
+                            <input type="text" class="form-control" id="txtnomineename" name="txtnomineename" maxlength="50" required ng-model="nomineename" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Nominee Relationship<span style="color:red" ng-show="frmloan.txtnomineerelationship.$invalid">*</span></label>
+                            <input type="text" class="form-control" id="txtnomineerelationship" name="txtnomineerelationship" required ng-model="relationship"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Address1<span style="color:red" ng-show="frmloan.txtAddress1.$invalid">*</span></label>
+                            <input type="text" class="form-control"
+                                   id="txtAddress1" name="txtAddress1" ng-model="present.address1" required maxlength="100"/>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Address2</label>
+                            <input type="text" class="form-control" id="txtAddress2"
+                                   name="txtAddress2" ng-model="present.address2" maxlength="100"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>City<span style="color:red" ng-show="frmloan.txtCity1.$invalid">*</span></label>
+                            <input type="text" class="form-control"
+                                   id="txtCity1" name="txtCity1"
+                                   ng-model="present.city" required/>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>District<span style="color:red" ng-show="frmloan.txtDistrict1.$invalid">*</span></label>
+                            <input type="text" class="form-control"
+                                   id="txtDistrict1" name="txtDistrict1"
+                                   ng-model="present.district" required maxlength="50"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>State<span style="color:red" ng-show="frmloan.ddlstate1.$invalid">*</span></label>
+                            <select class="form-control"
+                                    id="ddlstate1"
+                                    name="ddlstate1"
+                                    ng-model="present.state" required>
+                                <option>Andhra Pradesh</option>
+                                <option>Arunchal Pradesh</option>
+                                <option>Telangana</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>PINCode<span style="color:red" ng-show="frmloan.txtPinCode1.$invalid">*</span></label>
+                            <input type="text"
+                                   id="txtPinCode1"
+                                   name="txtPinCode1"
+                                   ng-model="present.pincode"
+                                   class="form-control" maxlength="6" required/>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">&nbsp;</div>
+                    
+                    <div class="col-md-6">
+                        <button type="button" class="btn btn-primary" value="Submit" ng-disabled="frmloan.$invalid" ng-click="saveloan()">Submit</button>
+                        <button type="button" class="btn btn-info" value="Cancel">Cancel</button>
+                    </div>
+                    
+
+                </div>
+                </div>
+            </div>
+     </form>
+</div>
+@section javascriptsection
+{
+    <script src="~/Scripts/loan/createloan.js"></script>
+    }

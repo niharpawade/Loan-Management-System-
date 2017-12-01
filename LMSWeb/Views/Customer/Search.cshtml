@@ -1,0 +1,66 @@
+﻿
+@{
+    ViewBag.Title = "Search";
+    Layout = "~/Views/Shared/_PrivateLayout.cshtml";
+}
+<div class="container-fluid" ng-controller="customersearchcontroller">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="index.html">Dashboard</a>
+        </li>
+        <li class="breadcrumb-item active">Customer Search</li>
+    </ol>
+    <div class="card">
+        <div class="card-header">
+            Customers
+        </div>
+        <div class="card-body">
+            <table class="table  table-bordered" >
+                <thead>
+                    <tr>
+                        <th>
+                            Name
+                        </th>
+                        <th>
+                            PAN Card
+                        </th>
+                        <th>
+                            Annual Income
+                        </th>
+                        <th>
+                            Edit
+                        </th>
+                        <th>
+                            Delete
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="customer in customers">
+                        <td>
+                            {{customer.Name}}
+                        </td>
+                        <td>
+                            {{customer.PanCard}}
+                        </td>
+                        <td>
+                            {{customer.AnnualIncome | currency:"&#8377"}}
+                        </td>
+                        <td>
+                            <a href="{{customer.ID}}"  ><i class="fa fa-fw fa-edit"></i></a>
+                        </td>
+                        <td>
+                            <a href="#"><i class="fa fa-fw fa-trash"></i></a>
+                        </td>
+                    </tr>
+                 
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@section javascriptsection
+{
+    <script src="~/Scripts/customer/searchcustomer.js"></script>
+}

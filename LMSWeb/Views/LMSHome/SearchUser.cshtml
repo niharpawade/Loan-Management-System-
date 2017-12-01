@@ -1,0 +1,57 @@
+﻿
+@{
+    ViewBag.Title = "SearchUser";
+    Layout = "~/Views/Shared/_PrivateLayout.cshtml";
+}
+<div class="container-fluid" ng-controller="usersearchcontroller">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="index.html">Dashboard</a>
+        </li>
+        <li class="breadcrumb-item active">Search Users</li>
+    </ol>
+    <div class="card">
+        <div class="card-header">Users List</div>
+        <div class="card-body">
+            <div class="row">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>S.No</th>
+                            <th>Name</th>
+                            <th>EmailId</th>
+                            <th>MobileNo</th>
+                            <th>Edit</th>
+                            <th>Delete</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="user in users">
+                            <td>{{$index+1}}</td>
+                            <td>{{user.Name}}</td>
+                            <td>{{user.EmailId}}</td>
+                            <td>{{user.MobileNo}}</td>
+                            <td>
+                         
+                                <a ng-href="~/LMSHome/EditUser/{{user.Id}}" class="btn btn-info">
+                                    <i class="fa fa-fw fa-edit"></i>
+                                </a>
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-info">
+                                    <i class="fa fa-fw fa-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+  </div>
+
+@section javascriptsection
+{
+    <script src="~/Scripts/user/searchuser.js"></script>
+}

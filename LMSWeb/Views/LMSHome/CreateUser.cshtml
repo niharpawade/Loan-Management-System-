@@ -1,0 +1,116 @@
+﻿
+@{
+    ViewBag.Title = "CreateUser";
+    var userid = ViewBag.userid;
+    Layout = "~/Views/Shared/_PrivateLayout.cshtml";
+}
+<div class="container-fluid" ng-controller="usercontroller">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="index.html">Dashboard</a>
+        </li>
+        <li class="breadcrumb-item active">User Create</li>
+    </ol>
+    <form id="frmuser" name="frmuser">
+        <input type="hidden" id="hdnuserid" ng-value="@userid" ng-model="userid"/>
+        <div class="card">
+            <div class="card-header">User Information</div>
+            <div class="card-body">
+                <!--Row-->
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Name<span ng-show="frmuser.txtname.$invalid" style="color:red">*</span> </label>
+                            <input type="text" class="form-control" id="txtname" name="txtname" maxlength="50" ng-model="name" required />
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Password<span style="color:red" ng-show="frmuser.txtpassword.$invalid">*</span> </label>
+                            <input type="password" class="form-control" id="txtpassword" name="txtpassword" maxlength="50" ng-model="userpassword" required />
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Re-Type Password<span style="color:red" ng-show="userpassword!=userretypepassword" >Password Mismatch</span> </label>
+                            <input type="password" class="form-control" id="txtretypepassword" name="txtretypepassword" maxlength="50" ng-model="userretypepassword" required />
+
+                        </div>
+                    </div>
+                </div>
+                <!--Row-->
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Mobile#</label>
+                            <input type="text" id="txtMobileNo" maxlength="15" name="txtMobileNo" class="form-control" ng-model="usermobileno" />
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Email Id</label>
+                            <input type="email" id="txtEmailId" name="txtEmailId" maxlength="50" class="form-control" ng-model="useremailid" />
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Role</label>
+                            <select id="ddlRole" class="form-control" ng-model="userrole" ng-options="role.Name for role in roles">
+                                <option>--Select--</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <!--Row-->
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-label" id="chkActive" name="chkActive" ng-model="userisactive" disabled />
+                            IsActive
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-label" id="chkLocked" name="chkLocked" ng-model="userislocked"  disabled/>
+                            IsLocked
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br />
+        <div class="card">
+            <div class="card-header">Security Information</div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Security Question</label>
+                            <select class="form-control" id="ddlSecurityQuestion" name="ddlSecurityQuestion" ng-model="usersecurityquestion" ng-options="question.QuestionName for question in questions"></select>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Answer</label>
+                            <input type="text" class="form-control" id="txtanswer" name="txtanswer" maxlength="50" ng-model="usersecurityanswer" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">&nbsp;</div>
+                    <div class="col-md-4">&nbsp;</div>
+                    <div class="col-md-4">
+                        <button type="button" class="btn btn-primary" value="Submit" ng-disabled="frmuser.$invalid" ng-click="saveuser();">Submit</button>
+                        <button type="button" class="btn btn-info" value="Cancel">Cancel</button>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </form>
+</div>
+@section javascriptsection
+{
+    <script src="~/Scripts/user/createuser.js"></script>
+}

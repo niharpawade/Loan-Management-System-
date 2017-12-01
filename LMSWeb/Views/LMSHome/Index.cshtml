@@ -1,0 +1,24 @@
+﻿@{
+    ViewBag.Title = "LMS Login";
+    Layout = "~/Views/Shared/_PublicLayout.cshtml";
+}
+<div class="card card-login mx-auto mt-5">
+    <div class="card-header">LMS Web Login</div>
+    <div class="card-body">
+        <form>
+            <div class="form-group">
+                <label for="lmsusername">Email address</label>
+                <input class="form-control" id="lmsusername" type="email" aria-describedby="emailHelp" placeholder="LMS User Name" maxlength="50">
+            </div>
+            <div class="form-group">
+                <label for="lmspassword">Password</label>
+                <input class="form-control" id="lmspassword" type="password" placeholder="Password" maxlength="50">
+            </div>
+            <a class="btn btn-primary btn-block" href="~/LMSHome/LandingPage">Login</a>
+        </form>
+        <div class="text-left">
+            <a class="d-block small" href="#">Forgot Password?</a>
+        </div>
+    </div>
+</div>
+

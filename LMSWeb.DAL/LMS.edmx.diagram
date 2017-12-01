@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="aa64cb6d2ac84b1ab6f20d5de4d7a9cf" Name="Diagram1">
+        <EntityTypeShape EntityType="LoanManagementSystemModel.Question" Width="1.5" PointX="7.75" PointY="10.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="LoanManagementSystemModel.tbl_Address" Width="1.5" PointX="0.75" PointY="4.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="LoanManagementSystemModel.tbl_Customer" Width="1.5" PointX="3" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="LoanManagementSystemModel.tbl_LMSUser" Width="1.5" PointX="10" PointY="9" IsExpanded="true" />
+        <EntityTypeShape EntityType="LoanManagementSystemModel.tbl_Loan" Width="1.5" PointX="5.25" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="LoanManagementSystemModel.tbl_LoanPayments" Width="1.5" PointX="7.5" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="LoanManagementSystemModel.tbl_LoanTypes" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="LoanManagementSystemModel.tbl_MaritalStatus" Width="1.5" PointX="0.75" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="LoanManagementSystemModel.tbl_Session" Width="1.5" PointX="12.25" PointY="9.875" IsExpanded="true" />
+        <AssociationConnector Association="LoanManagementSystemModel.fk_tbl_LMSUser_SecurityQuestionId" ManuallyRouted="false" />
+        <AssociationConnector Association="LoanManagementSystemModel.fk_NomineeAddressID" ManuallyRouted="false" />
+        <AssociationConnector Association="LoanManagementSystemModel.fk_tbl_Customer_PermanentAddressId" ManuallyRouted="false" />
+        <AssociationConnector Association="LoanManagementSystemModel.fk_tbl_Customer_PresentAddressID" ManuallyRouted="false" />
+        <AssociationConnector Association="LoanManagementSystemModel.fk_CustomerId" ManuallyRouted="false" />
+        <AssociationConnector Association="LoanManagementSystemModel.fk_tbl_Customer_MaritalStatusID" ManuallyRouted="false" />
+        <AssociationConnector Association="LoanManagementSystemModel.fk_UserID" ManuallyRouted="false" />
+        <AssociationConnector Association="LoanManagementSystemModel.fk_LoanId" ManuallyRouted="false" />
+        <AssociationConnector Association="LoanManagementSystemModel.fk_LoanTypeId" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

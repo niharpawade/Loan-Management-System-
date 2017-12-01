@@ -1,0 +1,75 @@
+﻿
+@{
+    ViewBag.Title = "Search";
+    Layout = "~/Views/Shared/_PrivateLayout.cshtml";
+}
+
+<div class="container-fluid" ng-controller="loansearchcontroller">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="index.html">Dashboard</a>
+        </li>
+        <li class="breadcrumb-item active">Loan Search</li>
+    </ol>
+    <div class="card">
+        <div class="card-header">Loans
+        </div>
+        <div class="card-body">
+            <!--table-->
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>
+                            Loan Number
+                        </th>
+                        <th>
+                            Customer Name
+                        </th>
+                        <th>
+                            Amount
+                        </th>
+                        <th>
+                            Edit Loan
+                        </th>
+                        <th>
+                            Delete Loan
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="y in loans"  >
+                        <td>
+                            {{y.LoanNo}}
+                        </td>
+                        <td id="custname" ng-model="custname"  >
+                          
+                            {{y.CustomerName}}
+                        </td>
+                        <td>
+                            {{y.Amount | currency:"&#8377"}}
+                        </td>
+                        <td>
+                            <a ng-href="~/Loan/EditLoan/{{y.Id}}" class="btn btn-info">
+                                <i class="fa fa-fw fa-edit"></i></a>
+</td>
+                        <td>
+                            <a href="#"><i class="fa fa-fw fa-trash"></i></a>
+                        </td>
+                    </tr>
+
+                </tbody>
+            </table>
+            
+
+        </div>
+
+
+
+    </div>
+ </div>
+@section javascriptsection
+{
+    <script src="~/Scripts/loan/searchloan.js"></script>
+}
+
+

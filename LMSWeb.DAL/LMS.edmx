@@ -1,0 +1,711 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="LoanManagementSystemModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Question">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="QuestionName" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="tbl_Address">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Address1" Type="varchar" MaxLength="100" />
+          <Property Name="Address2" Type="varchar" MaxLength="100" />
+          <Property Name="City" Type="varchar" MaxLength="50" />
+          <Property Name="District" Type="varchar" MaxLength="50" />
+          <Property Name="State" Type="varchar" MaxLength="50" />
+          <Property Name="PINCode" Type="varchar" MaxLength="6" />
+        </EntityType>
+        <EntityType Name="tbl_Customer">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" />
+          <Property Name="AdhaarNo" Type="varchar" MaxLength="50" />
+          <Property Name="MobileNo" Type="varchar" MaxLength="15" />
+          <Property Name="PANCard" Type="varchar" MaxLength="12" />
+          <Property Name="DOB" Type="date" />
+          <Property Name="Gender" Type="char" MaxLength="1" />
+          <Property Name="MaritalStatusId" Type="int" />
+          <Property Name="AnnualIncome" Type="money" />
+          <Property Name="Occupation" Type="varchar" MaxLength="100" />
+          <Property Name="PresentAddressId" Type="int" />
+          <Property Name="PermanentAddressId" Type="int" />
+        </EntityType>
+        <EntityType Name="tbl_LMSUser">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" />
+          <Property Name="Password" Type="varchar" MaxLength="50" />
+          <Property Name="SecurityQuestionId" Type="int" />
+          <Property Name="Answer" Type="varchar" MaxLength="50" />
+          <Property Name="MobileNo" Type="varchar" MaxLength="15" />
+          <Property Name="EmailId" Type="varchar" MaxLength="50" />
+          <Property Name="IsActive" Type="bit" />
+          <Property Name="IsLocked" Type="bit" />
+          <Property Name="LastLoggedIn" Type="datetime" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="CreatedBy" Type="varchar" MaxLength="50" />
+          <Property Name="Role" Type="char" MaxLength="1" />
+        </EntityType>
+        <EntityType Name="tbl_Loan">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LoanNo" Type="varchar" MaxLength="50" />
+          <Property Name="CustomerId" Type="int" />
+          <Property Name="LoanStatus" Type="char" MaxLength="1" />
+          <Property Name="LoanTypeId" Type="int" />
+          <Property Name="Amount" Type="money" />
+          <Property Name="AppliedDate" Type="datetime" />
+          <Property Name="ActivationDate" Type="datetime" />
+          <Property Name="interestrate" Type="float" />
+          <Property Name="NoOfInstallaments" Type="int" />
+          <Property Name="PaidInstallaments" Type="int" />
+          <Property Name="Nominee" Type="varchar" MaxLength="100" />
+          <Property Name="NomineeAddressID" Type="int" />
+          <Property Name="NomineeRelationShip" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="tbl_LoanPayments">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LoanID" Type="int" />
+          <Property Name="PaymentMethod" Type="varchar" MaxLength="50" />
+          <Property Name="Amount" Type="money" />
+          <Property Name="PaidDate" Type="datetime" />
+          <Property Name="PaidStatus" Type="char" MaxLength="1" />
+        </EntityType>
+        <EntityType Name="tbl_LoanTypes">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LoanName" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="IntrestRate" Type="decimal" Precision="4" Scale="2" />
+          <Property Name="MaxInstallments" Type="int" />
+          <Property Name="MaxAmount" Type="money" />
+        </EntityType>
+        <EntityType Name="tbl_MaritalStatus">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MaritalStatus" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="tbl_Session">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserID" Type="int" />
+          <Property Name="LoggedInDateTime" Type="datetime" />
+          <Property Name="LoggedOutDateTime" Type="datetime" />
+          <Property Name="IPAddress" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <Association Name="fk_CustomerId">
+          <End Role="tbl_Customer" Type="Self.tbl_Customer" Multiplicity="0..1" />
+          <End Role="tbl_Loan" Type="Self.tbl_Loan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_Customer">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tbl_Loan">
+              <PropertyRef Name="CustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_LoanId">
+          <End Role="tbl_Loan" Type="Self.tbl_Loan" Multiplicity="0..1" />
+          <End Role="tbl_LoanPayments" Type="Self.tbl_LoanPayments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_Loan">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tbl_LoanPayments">
+              <PropertyRef Name="LoanID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_LoanTypeId">
+          <End Role="tbl_LoanTypes" Type="Self.tbl_LoanTypes" Multiplicity="0..1" />
+          <End Role="tbl_Loan" Type="Self.tbl_Loan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_LoanTypes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tbl_Loan">
+              <PropertyRef Name="LoanTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_NomineeAddressID">
+          <End Role="tbl_Address" Type="Self.tbl_Address" Multiplicity="0..1" />
+          <End Role="tbl_Loan" Type="Self.tbl_Loan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_Address">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tbl_Loan">
+              <PropertyRef Name="NomineeAddressID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_tbl_Customer_MaritalStatusID">
+          <End Role="tbl_MaritalStatus" Type="Self.tbl_MaritalStatus" Multiplicity="0..1" />
+          <End Role="tbl_Customer" Type="Self.tbl_Customer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_MaritalStatus">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tbl_Customer">
+              <PropertyRef Name="MaritalStatusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_tbl_Customer_PermanentAddressId">
+          <End Role="tbl_Address" Type="Self.tbl_Address" Multiplicity="0..1" />
+          <End Role="tbl_Customer" Type="Self.tbl_Customer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_Address">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tbl_Customer">
+              <PropertyRef Name="PermanentAddressId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_tbl_Customer_PresentAddressID">
+          <End Role="tbl_Address" Type="Self.tbl_Address" Multiplicity="0..1" />
+          <End Role="tbl_Customer" Type="Self.tbl_Customer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_Address">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tbl_Customer">
+              <PropertyRef Name="PresentAddressId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_tbl_LMSUser_SecurityQuestionId">
+          <End Role="Question" Type="Self.Question" Multiplicity="0..1" />
+          <End Role="tbl_LMSUser" Type="Self.tbl_LMSUser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Question">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="tbl_LMSUser">
+              <PropertyRef Name="SecurityQuestionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_UserID">
+          <End Role="tbl_LMSUser" Type="Self.tbl_LMSUser" Multiplicity="0..1" />
+          <End Role="tbl_Session" Type="Self.tbl_Session" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_LMSUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tbl_Session">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="LoanManagementSystemModelStoreContainer">
+          <EntitySet Name="Question" EntityType="Self.Question" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_Address" EntityType="Self.tbl_Address" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_Customer" EntityType="Self.tbl_Customer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_LMSUser" EntityType="Self.tbl_LMSUser" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_Loan" EntityType="Self.tbl_Loan" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_LoanPayments" EntityType="Self.tbl_LoanPayments" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_LoanTypes" EntityType="Self.tbl_LoanTypes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_MaritalStatus" EntityType="Self.tbl_MaritalStatus" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_Session" EntityType="Self.tbl_Session" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="fk_CustomerId" Association="Self.fk_CustomerId">
+            <End Role="tbl_Customer" EntitySet="tbl_Customer" />
+            <End Role="tbl_Loan" EntitySet="tbl_Loan" />
+          </AssociationSet>
+          <AssociationSet Name="fk_LoanId" Association="Self.fk_LoanId">
+            <End Role="tbl_Loan" EntitySet="tbl_Loan" />
+            <End Role="tbl_LoanPayments" EntitySet="tbl_LoanPayments" />
+          </AssociationSet>
+          <AssociationSet Name="fk_LoanTypeId" Association="Self.fk_LoanTypeId">
+            <End Role="tbl_LoanTypes" EntitySet="tbl_LoanTypes" />
+            <End Role="tbl_Loan" EntitySet="tbl_Loan" />
+          </AssociationSet>
+          <AssociationSet Name="fk_NomineeAddressID" Association="Self.fk_NomineeAddressID">
+            <End Role="tbl_Address" EntitySet="tbl_Address" />
+            <End Role="tbl_Loan" EntitySet="tbl_Loan" />
+          </AssociationSet>
+          <AssociationSet Name="fk_tbl_Customer_MaritalStatusID" Association="Self.fk_tbl_Customer_MaritalStatusID">
+            <End Role="tbl_MaritalStatus" EntitySet="tbl_MaritalStatus" />
+            <End Role="tbl_Customer" EntitySet="tbl_Customer" />
+          </AssociationSet>
+          <AssociationSet Name="fk_tbl_Customer_PermanentAddressId" Association="Self.fk_tbl_Customer_PermanentAddressId">
+            <End Role="tbl_Address" EntitySet="tbl_Address" />
+            <End Role="tbl_Customer" EntitySet="tbl_Customer" />
+          </AssociationSet>
+          <AssociationSet Name="fk_tbl_Customer_PresentAddressID" Association="Self.fk_tbl_Customer_PresentAddressID">
+            <End Role="tbl_Address" EntitySet="tbl_Address" />
+            <End Role="tbl_Customer" EntitySet="tbl_Customer" />
+          </AssociationSet>
+          <AssociationSet Name="fk_tbl_LMSUser_SecurityQuestionId" Association="Self.fk_tbl_LMSUser_SecurityQuestionId">
+            <End Role="Question" EntitySet="Question" />
+            <End Role="tbl_LMSUser" EntitySet="tbl_LMSUser" />
+          </AssociationSet>
+          <AssociationSet Name="fk_UserID" Association="Self.fk_UserID">
+            <End Role="tbl_LMSUser" EntitySet="tbl_LMSUser" />
+            <End Role="tbl_Session" EntitySet="tbl_Session" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="LoanManagementSystemModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Question">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="QuestionName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="tbl_LMSUser" Relationship="Self.fk_tbl_LMSUser_SecurityQuestionId" FromRole="Question" ToRole="tbl_LMSUser" />
+        </EntityType>
+        <EntityType Name="tbl_Address">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Address1" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Address2" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="City" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="District" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="State" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PINCode" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="tbl_Loan" Relationship="Self.fk_NomineeAddressID" FromRole="tbl_Address" ToRole="tbl_Loan" />
+          <NavigationProperty Name="tbl_Customer" Relationship="Self.fk_tbl_Customer_PermanentAddressId" FromRole="tbl_Address" ToRole="tbl_Customer" />
+          <NavigationProperty Name="tbl_Customer1" Relationship="Self.fk_tbl_Customer_PresentAddressID" FromRole="tbl_Address" ToRole="tbl_Customer" />
+        </EntityType>
+        <EntityType Name="tbl_Customer">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="AdhaarNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="MobileNo" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="PANCard" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
+          <Property Name="DOB" Type="DateTime" Precision="0" />
+          <Property Name="Gender" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="MaritalStatusId" Type="Int32" />
+          <Property Name="AnnualIncome" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Occupation" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="PresentAddressId" Type="Int32" />
+          <Property Name="PermanentAddressId" Type="Int32" />
+          <NavigationProperty Name="tbl_Address" Relationship="Self.fk_tbl_Customer_PermanentAddressId" FromRole="tbl_Customer" ToRole="tbl_Address" />
+          <NavigationProperty Name="PresentAddress" Relationship="Self.fk_tbl_Customer_PresentAddressID" FromRole="tbl_Customer" ToRole="tbl_Address" />
+          <NavigationProperty Name="tbl_Loan" Relationship="Self.fk_CustomerId" FromRole="tbl_Customer" ToRole="tbl_Loan" />
+          <NavigationProperty Name="tbl_MaritalStatus" Relationship="Self.fk_tbl_Customer_MaritalStatusID" FromRole="tbl_Customer" ToRole="tbl_MaritalStatus" />
+        </EntityType>
+        <EntityType Name="tbl_LMSUser">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="SecurityQuestionId" Type="Int32" />
+          <Property Name="Answer" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="MobileNo" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="EmailId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="IsLocked" Type="Boolean" />
+          <Property Name="LastLoggedIn" Type="DateTime" Precision="3" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Role" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <NavigationProperty Name="Question" Relationship="Self.fk_tbl_LMSUser_SecurityQuestionId" FromRole="tbl_LMSUser" ToRole="Question" />
+          <NavigationProperty Name="tbl_Session" Relationship="Self.fk_UserID" FromRole="tbl_LMSUser" ToRole="tbl_Session" />
+        </EntityType>
+        <EntityType Name="tbl_Loan">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LoanNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CustomerId" Type="Int32" />
+          <Property Name="LoanStatus" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="LoanTypeId" Type="Int32" />
+          <Property Name="Amount" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="AppliedDate" Type="DateTime" Precision="3" />
+          <Property Name="ActivationDate" Type="DateTime" Precision="3" />
+          <Property Name="interestrate" Type="Double" />
+          <Property Name="NoOfInstallaments" Type="Int32" />
+          <Property Name="PaidInstallaments" Type="Int32" />
+          <Property Name="Nominee" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="NomineeAddressID" Type="Int32" />
+          <Property Name="NomineeRelationShip" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="tbl_Address" Relationship="Self.fk_NomineeAddressID" FromRole="tbl_Loan" ToRole="tbl_Address" />
+          <NavigationProperty Name="tbl_Customer" Relationship="Self.fk_CustomerId" FromRole="tbl_Loan" ToRole="tbl_Customer" />
+          <NavigationProperty Name="tbl_LoanPayments" Relationship="Self.fk_LoanId" FromRole="tbl_Loan" ToRole="tbl_LoanPayments" />
+          <NavigationProperty Name="tbl_LoanTypes" Relationship="Self.fk_LoanTypeId" FromRole="tbl_Loan" ToRole="tbl_LoanTypes" />
+        </EntityType>
+        <EntityType Name="tbl_LoanPayments">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LoanID" Type="Int32" />
+          <Property Name="PaymentMethod" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Amount" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="PaidDate" Type="DateTime" Precision="3" />
+          <Property Name="PaidStatus" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <NavigationProperty Name="tbl_Loan" Relationship="Self.fk_LoanId" FromRole="tbl_LoanPayments" ToRole="tbl_Loan" />
+        </EntityType>
+        <EntityType Name="tbl_LoanTypes">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LoanName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="tbl_Loan" Relationship="Self.fk_LoanTypeId" FromRole="tbl_LoanTypes" ToRole="tbl_Loan" />
+          <Property Name="IntrestRate" Type="Decimal" Precision="4" Scale="2" />
+          <Property Name="MaxInstallments" Type="Int32" />
+          <Property Name="MaxAmount" Type="Decimal" Precision="19" Scale="4" />
+        </EntityType>
+        <EntityType Name="tbl_MaritalStatus">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MaritalStatus" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="tbl_Customer" Relationship="Self.fk_tbl_Customer_MaritalStatusID" FromRole="tbl_MaritalStatus" ToRole="tbl_Customer" />
+        </EntityType>
+        <EntityType Name="tbl_Session">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserID" Type="Int32" />
+          <Property Name="LoggedInDateTime" Type="DateTime" Precision="3" />
+          <Property Name="LoggedOutDateTime" Type="DateTime" Precision="3" />
+          <Property Name="IPAddress" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="tbl_LMSUser" Relationship="Self.fk_UserID" FromRole="tbl_Session" ToRole="tbl_LMSUser" />
+        </EntityType>
+        <Association Name="fk_tbl_LMSUser_SecurityQuestionId">
+          <End Role="Question" Type="Self.Question" Multiplicity="0..1" />
+          <End Role="tbl_LMSUser" Type="Self.tbl_LMSUser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Question">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="tbl_LMSUser">
+              <PropertyRef Name="SecurityQuestionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_NomineeAddressID">
+          <End Role="tbl_Address" Type="Self.tbl_Address" Multiplicity="0..1" />
+          <End Role="tbl_Loan" Type="Self.tbl_Loan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_Address">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tbl_Loan">
+              <PropertyRef Name="NomineeAddressID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_tbl_Customer_PermanentAddressId">
+          <End Role="tbl_Address" Type="Self.tbl_Address" Multiplicity="0..1" />
+          <End Role="tbl_Customer" Type="Self.tbl_Customer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_Address">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tbl_Customer">
+              <PropertyRef Name="PermanentAddressId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_tbl_Customer_PresentAddressID">
+          <End Role="tbl_Address" Type="Self.tbl_Address" Multiplicity="0..1" />
+          <End Role="tbl_Customer" Type="Self.tbl_Customer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_Address">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tbl_Customer">
+              <PropertyRef Name="PresentAddressId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_CustomerId">
+          <End Role="tbl_Customer" Type="Self.tbl_Customer" Multiplicity="0..1" />
+          <End Role="tbl_Loan" Type="Self.tbl_Loan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_Customer">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tbl_Loan">
+              <PropertyRef Name="CustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_tbl_Customer_MaritalStatusID">
+          <End Role="tbl_MaritalStatus" Type="Self.tbl_MaritalStatus" Multiplicity="0..1" />
+          <End Role="tbl_Customer" Type="Self.tbl_Customer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_MaritalStatus">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tbl_Customer">
+              <PropertyRef Name="MaritalStatusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_UserID">
+          <End Role="tbl_LMSUser" Type="Self.tbl_LMSUser" Multiplicity="0..1" />
+          <End Role="tbl_Session" Type="Self.tbl_Session" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_LMSUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tbl_Session">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_LoanId">
+          <End Role="tbl_Loan" Type="Self.tbl_Loan" Multiplicity="0..1" />
+          <End Role="tbl_LoanPayments" Type="Self.tbl_LoanPayments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_Loan">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tbl_LoanPayments">
+              <PropertyRef Name="LoanID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_LoanTypeId">
+          <End Role="tbl_LoanTypes" Type="Self.tbl_LoanTypes" Multiplicity="0..1" />
+          <End Role="tbl_Loan" Type="Self.tbl_Loan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_LoanTypes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tbl_Loan">
+              <PropertyRef Name="LoanTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="LoanManagementSystemEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Questions" EntityType="Self.Question" />
+          <EntitySet Name="tbl_Address" EntityType="Self.tbl_Address" />
+          <EntitySet Name="tbl_Customer" EntityType="Self.tbl_Customer" />
+          <EntitySet Name="tbl_LMSUser" EntityType="Self.tbl_LMSUser" />
+          <EntitySet Name="tbl_Loan" EntityType="Self.tbl_Loan" />
+          <EntitySet Name="tbl_LoanPayments" EntityType="Self.tbl_LoanPayments" />
+          <EntitySet Name="tbl_LoanTypes" EntityType="Self.tbl_LoanTypes" />
+          <EntitySet Name="tbl_MaritalStatus" EntityType="Self.tbl_MaritalStatus" />
+          <EntitySet Name="tbl_Session" EntityType="Self.tbl_Session" />
+          <AssociationSet Name="fk_tbl_LMSUser_SecurityQuestionId" Association="Self.fk_tbl_LMSUser_SecurityQuestionId">
+            <End Role="Question" EntitySet="Questions" />
+            <End Role="tbl_LMSUser" EntitySet="tbl_LMSUser" />
+          </AssociationSet>
+          <AssociationSet Name="fk_NomineeAddressID" Association="Self.fk_NomineeAddressID">
+            <End Role="tbl_Address" EntitySet="tbl_Address" />
+            <End Role="tbl_Loan" EntitySet="tbl_Loan" />
+          </AssociationSet>
+          <AssociationSet Name="fk_tbl_Customer_PermanentAddressId" Association="Self.fk_tbl_Customer_PermanentAddressId">
+            <End Role="tbl_Address" EntitySet="tbl_Address" />
+            <End Role="tbl_Customer" EntitySet="tbl_Customer" />
+          </AssociationSet>
+          <AssociationSet Name="fk_tbl_Customer_PresentAddressID" Association="Self.fk_tbl_Customer_PresentAddressID">
+            <End Role="tbl_Address" EntitySet="tbl_Address" />
+            <End Role="tbl_Customer" EntitySet="tbl_Customer" />
+          </AssociationSet>
+          <AssociationSet Name="fk_CustomerId" Association="Self.fk_CustomerId">
+            <End Role="tbl_Customer" EntitySet="tbl_Customer" />
+            <End Role="tbl_Loan" EntitySet="tbl_Loan" />
+          </AssociationSet>
+          <AssociationSet Name="fk_tbl_Customer_MaritalStatusID" Association="Self.fk_tbl_Customer_MaritalStatusID">
+            <End Role="tbl_MaritalStatus" EntitySet="tbl_MaritalStatus" />
+            <End Role="tbl_Customer" EntitySet="tbl_Customer" />
+          </AssociationSet>
+          <AssociationSet Name="fk_UserID" Association="Self.fk_UserID">
+            <End Role="tbl_LMSUser" EntitySet="tbl_LMSUser" />
+            <End Role="tbl_Session" EntitySet="tbl_Session" />
+          </AssociationSet>
+          <AssociationSet Name="fk_LoanId" Association="Self.fk_LoanId">
+            <End Role="tbl_Loan" EntitySet="tbl_Loan" />
+            <End Role="tbl_LoanPayments" EntitySet="tbl_LoanPayments" />
+          </AssociationSet>
+          <AssociationSet Name="fk_LoanTypeId" Association="Self.fk_LoanTypeId">
+            <End Role="tbl_LoanTypes" EntitySet="tbl_LoanTypes" />
+            <End Role="tbl_Loan" EntitySet="tbl_Loan" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="LoanManagementSystemModelStoreContainer" CdmEntityContainer="LoanManagementSystemEntities">
+          <EntitySetMapping Name="Questions">
+            <EntityTypeMapping TypeName="LoanManagementSystemModel.Question">
+              <MappingFragment StoreEntitySet="Question">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="QuestionName" ColumnName="QuestionName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_Address">
+            <EntityTypeMapping TypeName="LoanManagementSystemModel.tbl_Address">
+              <MappingFragment StoreEntitySet="tbl_Address">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Address1" ColumnName="Address1" />
+                <ScalarProperty Name="Address2" ColumnName="Address2" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="District" ColumnName="District" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="PINCode" ColumnName="PINCode" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_Customer">
+            <EntityTypeMapping TypeName="LoanManagementSystemModel.tbl_Customer">
+              <MappingFragment StoreEntitySet="tbl_Customer">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="AdhaarNo" ColumnName="AdhaarNo" />
+                <ScalarProperty Name="MobileNo" ColumnName="MobileNo" />
+                <ScalarProperty Name="PANCard" ColumnName="PANCard" />
+                <ScalarProperty Name="DOB" ColumnName="DOB" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="MaritalStatusId" ColumnName="MaritalStatusId" />
+                <ScalarProperty Name="AnnualIncome" ColumnName="AnnualIncome" />
+                <ScalarProperty Name="Occupation" ColumnName="Occupation" />
+                <ScalarProperty Name="PresentAddressId" ColumnName="PresentAddressId" />
+                <ScalarProperty Name="PermanentAddressId" ColumnName="PermanentAddressId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_LMSUser">
+            <EntityTypeMapping TypeName="LoanManagementSystemModel.tbl_LMSUser">
+              <MappingFragment StoreEntitySet="tbl_LMSUser">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="SecurityQuestionId" ColumnName="SecurityQuestionId" />
+                <ScalarProperty Name="Answer" ColumnName="Answer" />
+                <ScalarProperty Name="MobileNo" ColumnName="MobileNo" />
+                <ScalarProperty Name="EmailId" ColumnName="EmailId" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="IsLocked" ColumnName="IsLocked" />
+                <ScalarProperty Name="LastLoggedIn" ColumnName="LastLoggedIn" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="Role" ColumnName="Role" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_Loan">
+            <EntityTypeMapping TypeName="LoanManagementSystemModel.tbl_Loan">
+              <MappingFragment StoreEntitySet="tbl_Loan">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="LoanNo" ColumnName="LoanNo" />
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+                <ScalarProperty Name="LoanStatus" ColumnName="LoanStatus" />
+                <ScalarProperty Name="LoanTypeId" ColumnName="LoanTypeId" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="AppliedDate" ColumnName="AppliedDate" />
+                <ScalarProperty Name="ActivationDate" ColumnName="ActivationDate" />
+                <ScalarProperty Name="interestrate" ColumnName="interestrate" />
+                <ScalarProperty Name="NoOfInstallaments" ColumnName="NoOfInstallaments" />
+                <ScalarProperty Name="PaidInstallaments" ColumnName="PaidInstallaments" />
+                <ScalarProperty Name="Nominee" ColumnName="Nominee" />
+                <ScalarProperty Name="NomineeAddressID" ColumnName="NomineeAddressID" />
+                <ScalarProperty Name="NomineeRelationShip" ColumnName="NomineeRelationShip" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_LoanPayments">
+            <EntityTypeMapping TypeName="LoanManagementSystemModel.tbl_LoanPayments">
+              <MappingFragment StoreEntitySet="tbl_LoanPayments">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="LoanID" ColumnName="LoanID" />
+                <ScalarProperty Name="PaymentMethod" ColumnName="PaymentMethod" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="PaidDate" ColumnName="PaidDate" />
+                <ScalarProperty Name="PaidStatus" ColumnName="PaidStatus" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_LoanTypes">
+            <EntityTypeMapping TypeName="LoanManagementSystemModel.tbl_LoanTypes">
+              <MappingFragment StoreEntitySet="tbl_LoanTypes">
+                <ScalarProperty Name="MaxAmount" ColumnName="MaxAmount" />
+                <ScalarProperty Name="MaxInstallments" ColumnName="MaxInstallments" />
+                <ScalarProperty Name="IntrestRate" ColumnName="IntrestRate" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="LoanName" ColumnName="LoanName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_MaritalStatus">
+            <EntityTypeMapping TypeName="LoanManagementSystemModel.tbl_MaritalStatus">
+              <MappingFragment StoreEntitySet="tbl_MaritalStatus">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="MaritalStatus" ColumnName="MaritalStatus" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_Session">
+            <EntityTypeMapping TypeName="LoanManagementSystemModel.tbl_Session">
+              <MappingFragment StoreEntitySet="tbl_Session">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="LoggedInDateTime" ColumnName="LoggedInDateTime" />
+                <ScalarProperty Name="LoggedOutDateTime" ColumnName="LoggedOutDateTime" />
+                <ScalarProperty Name="IPAddress" ColumnName="IPAddress" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
